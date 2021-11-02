@@ -13,7 +13,7 @@ options=webdriver.ChromeOptions()
 
 #使浏览器同意使用自动化，没有这个浏览器可能检测到机器人且拦截
 options.add_experimental_option("excludeSwitches", ['enable-automation'])
-selenium_error = 0
+selenium_judge = 0
 url_error = 'https://music.163.com/#/404'
 #读取文件且打开
 with open(path,'r') as file:
@@ -50,13 +50,13 @@ with open(path,'r') as file:
             2。第一次点击下载后最低下会弹出下载框，影响坐标
         所以得区分第一次，第二次与第三次及以后
         '''
-        if selenium_error== 0 :
+        if selenium_judge== 0 :
             sleep(common_sleep_time)
             ActionChains(webop).move_by_offset(370,250).click().perform()
             ActionChains(webop).move_by_offset(0,-60).click().perform()
             print('start download %s'%(web))
         else :
-            if selenium_error == 1:
+            if selenium_judge == 1:
                 sleep(common_sleep_time)
                 ActionChains(webop).move_by_offset(0,40).click().perform()
                 ActionChains(webop).move_by_offset(0,-60).click().perform()
@@ -67,7 +67,7 @@ with open(path,'r') as file:
                 ActionChains(webop).move_by_offset(0,-60).click().perform()
                 print('start download %s'%(web))
         sleep(common_sleep_time)
-        selenium_error+=1
+        selenium_judge+=1
         #selenium_error用于判断是否是第一次下载与判断鼠标位置
     sleep(common_sleep_time)
     print('download all ')
