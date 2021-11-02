@@ -37,11 +37,19 @@ with open(path,'r') as file:
         #打开网址
         webop.get(web)
         sleep(common_sleep_time)
+        #判断是否出错（歌曲是否存在）
         if webop.current_url == url_error :
             print(webop.current_url)
             print("this music does not exist")
             continue
+
         #因为免费下载的网站无法定位到元素因此物理定位，以下是模拟鼠标移动点击
+        '''
+        需要判断模拟鼠标存在的位置，影响因素：
+            1.第一次在左上角（0，0）
+            2。第一次点击下载后最低下会弹出下载框，影响坐标
+        所以得区分第一次，第二次与第三次及以后
+        '''
         if selenium_error== 0 :
             sleep(common_sleep_time)
             ActionChains(webop).move_by_offset(370,250).click().perform()
@@ -63,6 +71,7 @@ with open(path,'r') as file:
         #selenium_error用于判断是否是第一次下载与判断鼠标位置
     sleep(common_sleep_time)
     print('download all ')
+    #关闭文件及浏览器
     file.close()
     webop.close()
 
