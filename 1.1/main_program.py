@@ -5,25 +5,38 @@ from selenium.webdriver.common.action_chains import ActionChains
 from time import sleep
 
 class Wyy_download:
+    """
+    download 的方法:
+        file_path: the path for the file
+        download_speed: the speed for each website renew 
+    """
     def __init__(self, file_path, download_speed):
         self.path = file_path
         self.sleep_time = download_speed
         self.url_error = 'https://music.163.com/#/404'
-        self.options = webdriver.ChromeOptions()
-        self.options.add_experimental_option("excludeSwitches", ['enable-automation'])
         self.selenium_judge = 0
         self.windows_x = 480
         self.windows_y = 480
+        self.options = webdriver.ChromeOptions()
+        self.options.add_experimental_option("excludeSwitches", ['enable-automation'])
+
+    """
+    open():
+        open the file and set something for the web
+    """
     def open(self):
         self.file =  open(self.path, 'r')
-        self.webop = webdriver.Chrome(options = self.options)
+        self.webop = webdriver.Chrome(options = self.options)#.set_window_size(self.windows_x, self.windows_y)
         self.webop.set_window_size(self.windows_x, self.windows_y)
+
+    """
+    download():
+        start download.
+    """
     def download(self):
-        # self.webop.set_window_size(self.windows_x, self.windows_y)
         self.file =  open(self.path, 'r')
-        self.webop = webdriver.Chrome(options = self.options)
-        self.webop.set_window_size(self.windows_x, self.windows_y)
         for line in self.file.readlines():
+            sleep(self.sleep_time)
             # print(line)
             if(line[0] == 'h'):
                 web = 'http://music.163.com/song/media/outer/url?id=%s.mp3'%(line[33:])
@@ -54,6 +67,11 @@ class Wyy_download:
                 print('start download %s'%(web))
             self.selenium_judge += 1
         print("download all")
+
+    """
+    close_all():
+        close all the file and website
+    """
     def close_all(self):
         self.file.close()
         self.webop.close()
