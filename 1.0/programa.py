@@ -1,5 +1,7 @@
 # -*- coding: UTF-8 -*- 
-
+"""
+第一版程度，无任何封装，只展现代码的逻辑
+"""
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
 from time import sleep
